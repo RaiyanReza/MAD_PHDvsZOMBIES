@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PageThree">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="But beware, not all fruits are safe to eat. Some fruits have been infected by the living dead. Unless you have a death wish for you or your family, it is best if you avoid these contaminated fruits. If any of these infected fruits come into contact with the fresh fruits you have scavenged, your whole basket will become contaminated and inedible.
+Contaminated fruits will be distinguished from the fresh fruits by the mouldy and rotten patches visible on them.
+You have been warned."
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/btn_pageGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="49dp"
+            android:text="START" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/about_us_background"
+    android:backgroundTint="#80394239"
+    android:backgroundTintMode="src_over"
+    tools:context=".AboutUsActivity">
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="53dp"
+        android:layout_height="59dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/home_button"
+        app:layout_constraintEnd_toStartOf="@+id/aboutUsBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="40dp" />
+
+    <TextView
+        android:id="@+id/aboutUsBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="About Us"
+        android:textColor="@android:color/white"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/homeButton"
+        tools:layout_editor_absoluteY="40dp" />
+
+    <ImageView
+        android:id="@+id/teamPicture"
+        android:layout_width="wrap_content"
+        android:layout_height="310dp"
+        android:layout_marginTop="44dp"
+        android:paddingLeft="40dp"
+        android:paddingEnd="40dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/team_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton" />
+
+    <TextView
+        android:id="@+id/aboutUsText"
+        android:layout_width="351dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/teamPicture" />
+
+</android.support.constraint.ConstraintLayout>
