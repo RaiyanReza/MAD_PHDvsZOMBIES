@@ -83,6 +83,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_g11_game);
         cLayout = findViewById(R.id.cLayout);
 
+        final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+        final int pixels = (int) (48 * scale + 0.5f);
+
         backgroundMusic = MediaPlayer.create(this,R.raw.game_background_music);
         backgroundMusic.start();
 
@@ -118,9 +121,9 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public boolean onTouch(View v, MotionEvent m){
                         float mX = m.getX();
-                        if (mX > cLayout.getWidth()-character.getWidth())
-                            mX = cLayout.getWidth()-character.getWidth();
-                        character.setX(mX-150);
+                        if (mX > cLayout.getWidth()-character.getWidth()+pixels)
+                            mX = cLayout.getWidth()-character.getWidth()+pixels;
+                        character.setX(mX-pixels);
                         return true;
                     }
                 });
