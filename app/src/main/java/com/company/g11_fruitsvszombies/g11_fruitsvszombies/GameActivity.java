@@ -2,7 +2,6 @@ package com.company.g11_fruitsvszombies.g11_fruitsvszombies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -36,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     int lives = 3;
     float score = 0;
     float time = 0;
+    float highscore = 0;
 
     public ConstraintLayout cLayout;
 
@@ -216,17 +216,10 @@ public class GameActivity extends AppCompatActivity {
                     backToMenu.setEnabled(true);
                     backToMenu.setVisibility(View.VISIBLE);
 
-                    //save highest score
-                    SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
-                    float highScore = settings.getFloat("HighestScore",  0);
-                    if (score > highScore){
-                        scoreText.setText("Score:" + score +"\nHighest Score:" + score);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putFloat("HighestScore", score);
-                        editor.apply();
-                    }else{
-                        scoreText.setText("Score:" + score + "\nHighest Score:" + highScore);
+                    if (score > highscore) {
+                        highscore = score;
                     }
+                    scoreText.setText(String.format("Score: %.0f\nHighscore: %.0f",score, highscore));
                     scoreText.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -275,13 +268,4 @@ public class GameActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed(){
-        timer.cancel();
-        finish();
-    }
-
-
-
 }
