@@ -3,18 +3,12 @@ package com.company.g11_fruitsvszombies.g11_fruitsvszombies;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +22,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameActivity extends AppCompatActivity {
+public class PhdGameActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -115,7 +109,7 @@ public class GameActivity extends AppCompatActivity {
         final Button restart = (Button) findViewById(R.id.restartButton);
         restart.setEnabled(false);
 
-                //character moving part
+        //character moving part
         cLayout.setOnTouchListener(
                 new ConstraintLayout.OnTouchListener(){
                     @Override
@@ -230,7 +224,7 @@ public class GameActivity extends AppCompatActivity {
                     scoreText.setVisibility(View.VISIBLE);
                 }
             } else {
-                monster[i].setY(mY + 10 + time);  // speed of monsters
+                monster[i].setY(mY + 60 + time);  // speed of monsters
                 if (isTouching(character, monster[i])) {    //when monster intersects with character
                     touches++;
                     yeet(i, monster);
@@ -282,6 +276,5 @@ public class GameActivity extends AppCompatActivity {
         finish();
     }
 
-
-
 }
+
