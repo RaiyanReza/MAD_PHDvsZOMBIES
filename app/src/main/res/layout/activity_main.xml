@@ -63,7 +63,7 @@
         android:background="@drawable/menu_button_shape"
         android:text="About Us"
         android:textColor="@android:color/white"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

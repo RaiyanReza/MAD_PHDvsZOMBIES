@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MasterActivity"></activity>
         <activity android:name=".PhdGameActivity" />
+        <activity android:name=".FreeriderGameActivity"/>
         <activity android:name=".GameLevel" />
         <activity android:name=".NewStoryActivity" />
         <activity android:name=".MainActivity">

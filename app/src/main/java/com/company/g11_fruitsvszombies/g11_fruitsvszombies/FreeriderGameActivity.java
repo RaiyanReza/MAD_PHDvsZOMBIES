@@ -3,21 +3,16 @@ package com.company.g11_fruitsvszombies.g11_fruitsvszombies;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +23,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameActivity extends AppCompatActivity {
+public class FreeriderGameActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -36,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     int lives = 3;
     float score = 0;
     float time = 0;
+    int chokes = 0;
 
     public ConstraintLayout cLayout;
 
@@ -83,6 +79,9 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_g11_game);
         cLayout = findViewById(R.id.cLayout);
 
+        final ImageButton pause = findViewById(R.id.pauseButton);
+        pause.setVisibility(View.VISIBLE);
+
         final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
         final int pixels = (int) (48 * scale + 0.5f);
 
@@ -115,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
         final Button restart = (Button) findViewById(R.id.restartButton);
         restart.setEnabled(false);
 
-                //character moving part
+        //character moving part
         cLayout.setOnTouchListener(
                 new ConstraintLayout.OnTouchListener(){
                     @Override
@@ -140,6 +139,11 @@ public class GameActivity extends AppCompatActivity {
                 });
             }
         },0,50);
+
+    }
+
+    public void Pause(View v) {
+        lives=0;
     }
 
     private boolean isTouching(ImageView firstView, ImageView secondView) {
@@ -153,6 +157,8 @@ public class GameActivity extends AppCompatActivity {
 
         return rect1.intersect(rect2);
     }
+    public Button restart, backToMenu;
+    public TextView scoreText, timeText;
 
     private void monsterRelated() {
         final ImageView character = (ImageView) findViewById(R.id.character);
@@ -174,11 +180,31 @@ public class GameActivity extends AppCompatActivity {
         final TextView scoreText = (TextView) findViewById(R.id.score);
         final TextView timeText = (TextView) findViewById(R.id.elapsedTime);
         scoreText.setVisibility(View.INVISIBLE);
-        timeText.setText(String.format("Time: %.2f", time));
+        timeText.setText(String.format("Fruits collected: %d", touches));
         time += 0.05;
         score = score+100*time;
 
         for(int i=0;i<5;i++) {
+            if(lives == 0) {  //lose, then pop up restart button
+                timer.cancel();
+                try {
+                    backgroundMusic.stop();
+                    warningSound.stop();
+                    wrongSound.stop();
+                } catch (Exception e) {
+                }
+
+                gameOver = MediaPlayer.create(this,R.raw.game_over);
+                gameOver.start();
+
+                restart.setEnabled(true);
+                restart.setVisibility(View.VISIBLE);
+                backToMenu.setEnabled(true);
+                backToMenu.setVisibility(View.VISIBLE);
+                scoreText.setText("Score not counted\nFruits collected: " + touches + "\nFruits dropped: " + chokes);
+                timeText.setVisibility(View.INVISIBLE);
+                scoreText.setVisibility(View.VISIBLE);
+            }
             float mX = monster[i].getX();
             float mY = monster[i].getY();
 
@@ -191,46 +217,11 @@ public class GameActivity extends AppCompatActivity {
                 monster[i].setX((float) (Math.random() * (findViewById(R.id.cLayout).getWidth() - mX)));
                 monster[i].setY(-10);
                 yeet(i, monster);
-                lives--;
-                if (lives == 1) {
-                    warningSound = MediaPlayer.create(this,R.raw.what_are_you_doing);
-                    warningSound.start();
-                }else if (lives < 3){
-                    wrongSound = MediaPlayer.create(this,R.raw.wrong_sound);
-                    wrongSound.start();
-                }
-
-
-                Toast.makeText(this, lives + " lives left!", Toast.LENGTH_SHORT).show();
-                if(lives == 0) {  //lose, then pop up restart button
-                    timer.cancel();
-
-                    backgroundMusic.stop();
-                    warningSound.stop();
-                    wrongSound.stop();
-                    gameOver = MediaPlayer.create(this,R.raw.game_over);
-                    gameOver.start();
-
-                    restart.setEnabled(true);
-                    restart.setVisibility(View.VISIBLE);
-                    backToMenu.setEnabled(true);
-                    backToMenu.setVisibility(View.VISIBLE);
-
-                    //save highest score
-                    SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
-                    float highScore = settings.getFloat("HighestScore",  0);
-                    if (score > highScore){
-                        scoreText.setText("Score: " + score +"\nHighest Score: " + score);
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putFloat("HighestScore", score);
-                        editor.apply();
-                    }else{
-                        scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
-                    }
-                    scoreText.setVisibility(View.VISIBLE);
-                }
+                wrongSound = MediaPlayer.create(this,R.raw.wrong_sound);
+                wrongSound.start();
+                chokes++;
             } else {
-                monster[i].setY(mY + 10 + time);  // speed of monsters
+                monster[i].setY(mY + 20);  // speed of monsters
                 if (isTouching(character, monster[i])) {    //when monster intersects with character
                     touches++;
                     yeet(i, monster);
@@ -281,7 +272,6 @@ public class GameActivity extends AppCompatActivity {
         timer.cancel();
         finish();
     }
-
 
 
 }

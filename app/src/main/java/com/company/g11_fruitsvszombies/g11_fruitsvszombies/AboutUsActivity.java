@@ -53,5 +53,12 @@ public class AboutUsActivity extends AppCompatActivity {
         backgroundMusic = MediaPlayer.create(this,R.raw.about_us_music);
         backgroundMusic.setLooping(true);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent goHome = new Intent(AboutUsActivity.this, MainActivity.class);
+        startActivity(goHome);
+    }
 }
 

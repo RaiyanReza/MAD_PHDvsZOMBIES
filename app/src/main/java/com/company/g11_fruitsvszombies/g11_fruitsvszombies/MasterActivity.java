@@ -197,12 +197,12 @@ public class MasterActivity extends AppCompatActivity {
                     SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
                     float highScore = settings.getFloat("HighestScore",  0);
                     if (score > highScore){
-                        scoreText.setText("Score:" + score +"\nHighest Score:" + score);
+                        scoreText.setText("Score: " + score +"\nHighest Score: " + score);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putFloat("HighestScore", score);
                         editor.apply();
                     }else{
-                        scoreText.setText("Score:" + score + "\nHighest Score:" + highScore);
+                        scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
                     }
                     scoreText.setVisibility(View.VISIBLE);
                 }

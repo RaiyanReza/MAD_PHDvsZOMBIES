@@ -33,7 +33,7 @@ public class GameLevel extends AppCompatActivity {
     }
 
     public void FreeRider(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,FreeriderGameActivity.class);
         finish();
         startActivity(intent);
     }
