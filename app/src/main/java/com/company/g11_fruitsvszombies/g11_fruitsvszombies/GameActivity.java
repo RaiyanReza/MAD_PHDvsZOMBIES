@@ -196,8 +196,6 @@ public class GameActivity extends AppCompatActivity {
         if(lives == 0) {  //lose, then pop up restart button
 
             backgroundMusic.stop();
-            warningSound.stop();
-            wrongSound.stop();
             gameOver = MediaPlayer.create(this,R.raw.game_over);
             gameOver.start();
 
@@ -252,8 +250,6 @@ public class GameActivity extends AppCompatActivity {
                 if(lives == 0) {  //lose, then pop up restart button
 
                     backgroundMusic.stop();
-                    warningSound.stop();
-                    wrongSound.stop();
                     gameOver = MediaPlayer.create(this,R.raw.game_over);
                     gameOver.start();
 
