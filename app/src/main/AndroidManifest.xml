@@ -11,13 +11,12 @@
         android:theme="@style/AppTheme">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <activity android:name=".Achievement"></activity>
 =======
         <activity android:name=".CharacterActivity"></activity>
 >>>>>>> Stashed changes
 =======
-        <activity android:name=".CharacterActivity"></activity>
->>>>>>> Stashed changes
         <activity android:name=".MasterActivity" />
         <activity android:name=".PhdGameActivity" />
         <activity android:name=".FreeriderGameActivity" />
