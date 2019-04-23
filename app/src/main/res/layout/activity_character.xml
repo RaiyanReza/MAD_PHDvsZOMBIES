@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/closet"
+    android:backgroundTint="#80394239"
+    android:backgroundTintMode="src_over"
+    tools:context=".CharacterActivity">
+
+    <ImageButton
+        android:id="@+id/btnPreviousCharacter"
+        android:layout_width="78dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="7dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+        app:layout_constraintEnd_toStartOf="@+id/chracterImageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <ImageButton
+        android:id="@+id/btnNextCharacter"
+        android:layout_width="78dp"
+        android:layout_height="95dp"
+        android:layout_marginEnd="9dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+
+        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chracterImageView"
+        tools:layout_editor_absoluteY="311dp" />
+
+
+    <TextView
+        android:id="@+id/character_TitleBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Character"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/chracterImageView"
+        android:layout_width="219dp"
+        android:layout_height="307dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/sam_gor"
+        app:layout_constraintBottom_toTopOf="@+id/characterNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/character_TitleBar" />
+
+    <TextView
+        android:id="@+id/characterNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Character: "
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnChooseCharacter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chracterImageView" />
+
+    <Button
+        android:id="@+id/btnChooseCharacter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btn_game"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="87dp"
+        android:background="@drawable/menu_button_shape"
+        android:text="Choose"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/characterNameTextView" />
+</android.support.constraint.ConstraintLayout>
