@@ -15,17 +15,22 @@ public class Achievement extends AppCompatActivity {
         setContentView(R.layout.activity_achievement);
 
         int firstDead = 1;
+        int unlock_dominic = 1;
 
         TextView textView = (TextView) findViewById(R.id.first_time_dead);
+        TextView textView1 =(TextView) findViewById(R.id.Unlocked_Dominique);
 
         SharedPreferences setting = getSharedPreferences("Data",MODE_PRIVATE);
 
+
         firstDead = setting.getInt("FirstDead",0);
+        unlock_dominic = setting.getInt("LordDominic",0);
 
         if(firstDead == 10)
             textView.setText("Your first time dead");
-        else
-            textView.setText("Achievement Locked.");
+
+        if(unlock_dominic == 12)
+            textView1.setText("Dominic Award");
 
 
     }

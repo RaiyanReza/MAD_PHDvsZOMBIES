@@ -283,6 +283,12 @@ public class GameActivity extends AppCompatActivity {
                 monster[i].setY(mY + 10 + time);  // speed of monsters
                 if (isTouching(character, monster[i])) {    //when monster intersects with character
                     touches++;
+                    if(touches>50){
+                        SharedPreferences secondsetting = getSharedPreferences("Data",MODE_PRIVATE);
+                        SharedPreferences.Editor secondeditor = secondsetting.edit();
+                        secondeditor.putInt("LordDominic",12);
+                        secondeditor.apply();
+                    }
                     if(i==4) {
                         yeetrotten(i,monster);
                         lives--;
