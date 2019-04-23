@@ -2,18 +2,13 @@ package com.company.g11_fruitsvszombies.g11_fruitsvszombies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,15 +22,13 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameActivity extends AppCompatActivity {
+public class MasterActivity extends AppCompatActivity {
 
     private Handler handler = new Handler();
     private Timer timer = new Timer();
     int touches = 0;
-    int lives = 3;
     float score = 0;
     float time = 0;
-    float highscore = 0;
 
     public ConstraintLayout cLayout;
 
@@ -115,7 +108,7 @@ public class GameActivity extends AppCompatActivity {
         final Button restart = (Button) findViewById(R.id.restartButton);
         restart.setEnabled(false);
 
-                //character moving part
+        //character moving part
         cLayout.setOnTouchListener(
                 new ConstraintLayout.OnTouchListener(){
                     @Override
@@ -191,25 +184,9 @@ public class GameActivity extends AppCompatActivity {
                 monster[i].setX((float) (Math.random() * (findViewById(R.id.cLayout).getWidth() - mX)));
                 monster[i].setY(-10);
                 yeet(i, monster);
-                lives--;
-                if (lives == 1) {
-                    warningSound = MediaPlayer.create(this,R.raw.what_are_you_doing);
-                    warningSound.start();
-                }else if (lives < 3){
-                    wrongSound = MediaPlayer.create(this,R.raw.wrong_sound);
-                    wrongSound.start();
-                }
-
-
-                Toast.makeText(this, lives + " lives left!", Toast.LENGTH_SHORT).show();
-                if(lives == 0) {  //lose, then pop up restart button
+                if(time > 59.5) {  //lose, then pop up restart button
+                    timeText.setText("Time: 60");
                     timer.cancel();
-
-                    backgroundMusic.stop();
-                    warningSound.stop();
-                    wrongSound.stop();
-                    gameOver = MediaPlayer.create(this,R.raw.game_over);
-                    gameOver.start();
 
                     restart.setEnabled(true);
                     restart.setVisibility(View.VISIBLE);
@@ -227,7 +204,6 @@ public class GameActivity extends AppCompatActivity {
                     }else{
                         scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
                     }
-                    scoreText.setText(String.format("Score: %.0f\nHighscore: %.0f",score, highscore));
                     scoreText.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -276,4 +252,13 @@ public class GameActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
+
+    @Override
+    public void onBackPressed(){
+        timer.cancel();
+        finish();
+    }
+
 }
+
