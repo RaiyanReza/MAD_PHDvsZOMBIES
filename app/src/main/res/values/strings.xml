@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Fruits vs Zombies</string>
     <string name="score">Score</string>
-    <string name="level">Game Level</string>
 </resources>
