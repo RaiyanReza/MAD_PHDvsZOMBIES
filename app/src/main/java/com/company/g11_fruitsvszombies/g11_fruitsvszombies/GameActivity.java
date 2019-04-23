@@ -2,6 +2,7 @@ package com.company.g11_fruitsvszombies.g11_fruitsvszombies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -35,7 +36,6 @@ public class GameActivity extends AppCompatActivity {
     int lives = 3;
     float score = 0;
     float time = 0;
-    float highscore = 0;
 
     public ConstraintLayout cLayout;
 
@@ -115,7 +115,7 @@ public class GameActivity extends AppCompatActivity {
         final Button restart = (Button) findViewById(R.id.restartButton);
         restart.setEnabled(false);
 
-                //character moving part
+        //character moving part
         cLayout.setOnTouchListener(
                 new ConstraintLayout.OnTouchListener(){
                     @Override
@@ -227,7 +227,6 @@ public class GameActivity extends AppCompatActivity {
                     }else{
                         scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
                     }
-                    scoreText.setText(String.format("Score: %.0f\nHighscore: %.0f",score, highscore));
                     scoreText.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -276,4 +275,13 @@ public class GameActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed(){
+        timer.cancel();
+        finish();
+    }
+
+
+
 }

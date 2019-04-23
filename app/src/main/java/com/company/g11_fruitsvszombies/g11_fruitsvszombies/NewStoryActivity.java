@@ -22,7 +22,7 @@ public class NewStoryActivity extends AppCompatActivity {
                 "\n" +
                 "As the man of the family, it is your job to venture into the woods daily to scavenge for fruits and bring them home for your family so that they can survive the day.\n");
 
-            continueButton.setOnClickListener(new View.OnClickListener() {
+        continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TextView storyView = findViewById(R.id.storyTextView);
