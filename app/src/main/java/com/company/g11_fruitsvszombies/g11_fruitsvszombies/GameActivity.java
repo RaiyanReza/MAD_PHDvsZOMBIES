@@ -48,10 +48,16 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer wrongSound = null;
 
     List <String> list = new ArrayList<>();
+    List <String> listRotten = new ArrayList<>();
 
     public String randomBetween() {
         Random random = new Random();
         return list.get(random.nextInt(list.size()));
+    }
+
+    public String randomBetweenRotten() {
+        Random random = new Random();
+        return listRotten.get(random.nextInt(listRotten.size()));
     }
 
     public void yeet(int i, ImageView[] monster) {
@@ -59,6 +65,13 @@ public class GameActivity extends AppCompatActivity {
         int id = c.getResources().getIdentifier("drawable/"+randomBetween(), null, c.getPackageName());
         monster[i].setImageResource(id);
     }
+
+    public void yeetrotten(int i, ImageView[] monster) {
+        Context c = getApplicationContext();
+        int id = c.getResources().getIdentifier("drawable/"+randomBetweenRotten(), null, c.getPackageName());
+        monster[i].setImageResource(id);
+    }
+
 
     public float randStart() {
         Random random = new Random();
@@ -104,11 +117,13 @@ public class GameActivity extends AppCompatActivity {
         list.add("apple");
         list.add("pear");
         list.add("banana");
+        listRotten.add("rotapple");
+        listRotten.add("rotbanana");
+        listRotten.add("rotpear");
 
         for (int i = 0; i < 5; i++) {
-            Context c = getApplicationContext();
-            int id = c.getResources().getIdentifier("drawable/"+randomBetween(), null, c.getPackageName());
-            monster[i].setImageResource(id);
+            if(i==4) yeetrotten(i,monster);
+            else yeet(i,monster);
             monster[i].setX(randStart());
         }
 
@@ -178,6 +193,34 @@ public class GameActivity extends AppCompatActivity {
         time += 0.05;
         score = score+100*time;
 
+        if(lives == 0) {  //lose, then pop up restart button
+
+            backgroundMusic.stop();
+            warningSound.stop();
+            wrongSound.stop();
+            gameOver = MediaPlayer.create(this,R.raw.game_over);
+            gameOver.start();
+
+            restart.setEnabled(true);
+            restart.setVisibility(View.VISIBLE);
+            backToMenu.setEnabled(true);
+            backToMenu.setVisibility(View.VISIBLE);
+
+            //save highest score
+            SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
+            float highScore = settings.getFloat("HighestScore",  0);
+            if (score > highScore){
+                scoreText.setText("Score: " + score +"\nHighest Score: " + score);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putFloat("HighestScore", score);
+                editor.apply();
+            }else{
+                scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
+            }
+            scoreText.setVisibility(View.VISIBLE);
+            timer.cancel();
+        }
+
         for(int i=0;i<5;i++) {
             float mX = monster[i].getX();
             float mY = monster[i].getY();
@@ -190,20 +233,23 @@ public class GameActivity extends AppCompatActivity {
             if (mY > findViewById(R.id.cLayout).getHeight()) {
                 monster[i].setX((float) (Math.random() * (findViewById(R.id.cLayout).getWidth() - mX)));
                 monster[i].setY(-10);
-                yeet(i, monster);
-                lives--;
-                if (lives == 1) {
-                    warningSound = MediaPlayer.create(this,R.raw.what_are_you_doing);
-                    warningSound.start();
-                }else if (lives < 3){
-                    wrongSound = MediaPlayer.create(this,R.raw.wrong_sound);
-                    wrongSound.start();
+
+                if(i==4) yeetrotten(i,monster);
+                else {
+                    yeet(i, monster);
+                    lives--;
+                    if (lives == 1) {
+                        warningSound = MediaPlayer.create(this, R.raw.what_are_you_doing);
+                        warningSound.start();
+                    } else if (lives < 3) {
+                        wrongSound = MediaPlayer.create(this, R.raw.wrong_sound);
+                        wrongSound.start();
+                    }
                 }
 
+                    Toast.makeText(this, lives + " lives left!", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(this, lives + " lives left!", Toast.LENGTH_SHORT).show();
                 if(lives == 0) {  //lose, then pop up restart button
-                    timer.cancel();
 
                     backgroundMusic.stop();
                     warningSound.stop();
@@ -228,23 +274,33 @@ public class GameActivity extends AppCompatActivity {
                         scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
                     }
                     scoreText.setVisibility(View.VISIBLE);
+                    timer.cancel();
                 }
+
+
+
             } else {
                 monster[i].setY(mY + 10 + time);  // speed of monsters
                 if (isTouching(character, monster[i])) {    //when monster intersects with character
                     touches++;
-                    yeet(i, monster);
-                    hitSound = MediaPlayer.create(this,R.raw.hit_sound);
-                    hitSound.setVolume(60,60);
-                    hitSound.start();
+                    if(i==4) {
+                        yeetrotten(i,monster);
+                        lives--;
+                        Toast.makeText(this, lives + " lives left!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        yeet(i, monster);
+                    }
+                        hitSound = MediaPlayer.create(this, R.raw.hit_sound);
+                        hitSound.setVolume(60, 60);
+                        hitSound.start();
 
-                    hitSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            hitSound.release();
-                        }
-                    });
-
+                        hitSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                hitSound.release();
+                            }
+                        });
                     score = (score+100*time) + (touches*10);
 
                     if (touches%30 == 0 && touches != 0) {
@@ -259,6 +315,7 @@ public class GameActivity extends AppCompatActivity {
                     monster[i].setX((float) (Math.random() * (findViewById(R.id.cLayout).getWidth() - mX)));
                     monster[i].setY(-10);
                 }
+
             }
         }
     }
