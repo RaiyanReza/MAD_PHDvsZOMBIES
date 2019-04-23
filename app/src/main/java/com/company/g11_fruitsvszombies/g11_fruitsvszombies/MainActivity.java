@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 openActivity_story();
             }
         });
+
+
     }
 
     public void openActivity_aboutUs(){
@@ -79,4 +81,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toAchievement(View view) {
+        Intent intent = new Intent(this, Achievement.class);
+        startActivity(intent);
+
+    }
 }

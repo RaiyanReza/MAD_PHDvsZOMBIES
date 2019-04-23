@@ -206,16 +206,19 @@ public class GameActivity extends AppCompatActivity {
 
             //save highest score
             SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
             float highScore = settings.getFloat("HighestScore",  0);
             if (score > highScore){
                 scoreText.setText("Score: " + score +"\nHighest Score: " + score);
-                SharedPreferences.Editor editor = settings.edit();
                 editor.putFloat("HighestScore", score);
-                editor.apply();
             }else{
                 scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
             }
             scoreText.setVisibility(View.VISIBLE);
+
+            editor.putInt("FirstDead",10);
+            editor.apply();
+
             timer.cancel();
         }
 
@@ -260,15 +263,16 @@ public class GameActivity extends AppCompatActivity {
 
                     //save highest score
                     SharedPreferences settings = getSharedPreferences("Data",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
                     float highScore = settings.getFloat("HighestScore",  0);
                     if (score > highScore){
                         scoreText.setText("Score: " + score +"\nHighest Score: " + score);
-                        SharedPreferences.Editor editor = settings.edit();
                         editor.putFloat("HighestScore", score);
-                        editor.apply();
                     }else{
                         scoreText.setText("Score: " + score + "\nHighest Score: " + highScore);
                     }
+                    editor.putInt("FirstDead",10);
+                    editor.apply();
                     scoreText.setVisibility(View.VISIBLE);
                     timer.cancel();
                 }
